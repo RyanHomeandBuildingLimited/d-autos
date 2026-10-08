@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DAutos | Mobile Car Tuning & Car Audio</title>
+
+<meta
+    name="description"
+    content="DAutos mobile car tuning, ECU remapping, diagnostics, car radios, CarPlay and audio upgrades. Message us on WhatsApp."
+>
+
+<style>
+/* =========================================================
+   RESET / GLOBAL
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 85px;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #050b14;
+    color: #f4f7fb;
+    line-height: 1.6;
+}
+
+:root {
+    --blue: #087cff;
+    --blue2: #0054c7;
+    --blue3: #19a0ff;
+    --black: #050b14;
+    --dark: #0a111c;
+    --dark2: #101a28;
+    --dark3: #152235;
+    --grey: #9ba9ba;
+    --white: #ffffff;
+    --border: #23344a;
+    --green: #25d366;
+}
+
+.container {
+    width: min(1180px, calc(100% - 32px));
+    margin: auto;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(5, 11, 20, .96);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+}
+
+.navbar {
+    min-height: 78px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.logo-mark {
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--blue3), var(--blue2));
+    border-radius: 9px;
+    font-weight: 900;
+    font-size: 22px;
+    transform: skew(-7deg);
+    box-shadow: 0 0 25px rgba(8, 124, 255, .25);
+}
+
+.logo strong {
+    display: block;
+    font-size: 1.45rem;
+    letter-spacing: 1px;
+}
+
+.logo span {
+    display: block;
+    font-size: .62rem;
+    color: #91a0b3;
+    letter-spacing: 2px;
+}
+
+nav {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+nav a {
+    color: #e9f1fa;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: .95rem;
+}
+
+nav a:hover {
+    color: var(--blue3);
+}
+
+.nav-button {
+    background: var(--blue);
+    padding: 11px 18px;
+    border-radius: 7px;
+}
+
+.menu {
+    display: none;
+    border: 0;
+    background: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    min-height: 690px;
+    display: flex;
+    align-items: center;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(3, 8, 15, .99) 0%,
+            rgba(3, 8, 15, .94) 45%,
+            rgba(3, 8, 15, .60) 100%
+        ),
+        radial-gradient(
+            circle at 80% 40%,
+            #064b92 0%,
+            #102744 35%,
+            #050b14 72%
+        );
+}
+
+.hero-content {
+    max-width: 800px;
+    padding: 90px 0;
+}
+
+.badge {
+    display: inline-block;
+    color: #36a9ff;
+    border: 1px solid #155b96;
+    background: rgba(8, 124, 255, .08);
+    padding: 7px 13px;
+    border-radius: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: .72rem;
+    font-weight: bold;
+    margin-bottom: 22px;
+}
+
+.hero h1 {
+    font-size: clamp(3.2rem, 8vw, 6.8rem);
+    line-height: .9;
+    letter-spacing: -4px;
+    margin-bottom: 28px;
+}
+
+.hero h1 span {
+    color: var(--blue);
+}
+
+.hero p {
+    color: #c0ccda;
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin-bottom: 32px;
+}
+
+.buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 54px;
+    padding: 0 25px;
+    border-radius: 7px;
+    text-decoration: none;
+    font-weight: 900;
+    border: 2px solid transparent;
+    transition: .2s;
+}
+
+.btn-blue {
+    color: white;
+    background: linear-gradient(135deg, var(--blue3), var(--blue2));
+    box-shadow: 0 8px 25px rgba(8, 124, 255, .2);
+}
+
+.btn-blue:hover {
+    background: #1690ff;
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    color: white;
+    border-color: #4a6078;
+}
+
+.btn-outline:hover {
+    border-color: var(--blue3);
+    color: var(--blue3);
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats {
+    background: linear-gradient(90deg, #005bcf, #087cff, #005bcf);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.stat {
+    text-align: center;
+    padding: 27px 15px;
+    border-right: 1px solid rgba(255, 255, 255, .2);
+}
+
+.stat:last-child {
+    border-right: 0;
+}
+
+.stat strong {
+    display: block;
+    font-size: 1.3rem;
+}
+
+.stat span {
+    font-size: .9rem;
+    opacity: .85;
+}
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+section {
+    padding: 90px 0;
+}
+
+.heading {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 50px;
+}
+
+.heading .small {
+    color: #22a0ff;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: .75rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.heading h2 {
+    font-size: clamp(2.3rem, 5vw, 4rem);
+    line-height: 1;
+    margin-bottom: 16px;
+}
+
+.heading p {
+    color: var(--grey);
+}
+
+/* =========================================================
+   SERVICES
+========================================================= */
+
+.services {
+    background: #07101b;
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.service {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    padding: 32px;
+    border-radius: 12px;
+    transition: .2s;
+}
+
+.service:hover {
+    border-color: var(--blue);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, .25);
+}
+
+.service-icon {
+    width: 55px;
+    height: 55px;
+    background: rgba(8, 124, 255, .12);
+    color: #35a7ff;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.service h3 {
+    font-size: 1.35rem;
+    margin-bottom: 10px;
+}
+
+.service p {
+    color: var(--grey);
+}
+
+/* =========================================================
+   TUNING
+========================================================= */
+
+.tuning {
+    background: linear-gradient(100deg, #0d1a2a, #050b14);
+}
+
+.tuning-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+    align-items: center;
+}
+
+.tuning h2 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1;
+    margin-bottom: 20px;
+}
+
+.tuning p {
+    color: var(--grey);
+    margin-bottom: 18px;
+}
+
+.checks {
+    list-style: none;
+    margin: 25px 0;
+}
+
+.checks li {
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+.checks li::before {
+    content: "✓";
+    color: #27a5ff;
+    margin-right: 10px;
+}
+
+.tuning-box {
+    min-height: 430px;
+    border-radius: 18px;
+    border: 1px solid #29445f;
+    background:
+        radial-gradient(circle at 50% 45%, #064b92, #10243c 48%, #080f18);
+    display: grid;
+    place-items: center;
+    font-size: 10rem;
+    box-shadow: inset 0 0 70px rgba(0, 0, 0, .35);
+}
+
+/* =========================================================
+   RADIO
+========================================================= */
+
+.radio {
+    background: #f0f4f8;
+    color: #111820;
+}
+
+.radio .heading h2 {
+    color: #111820;
+}
+
+.radio .heading p {
+    color: #596674;
+}
+
+.radio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.radio-card {
+    background: white;
+    padding: 32px;
+    border-radius: 12px;
+    border: 1px solid #d6dfe8;
+}
+
+.radio-card .icon {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.radio-card h3 {
+    margin-bottom: 8px;
+}
+
+.radio-card p {
+    color: #66717d;
+}
+
+/* =========================================================
+   WHY
+========================================================= */
+
+.why {
+    background: #07101a;
+}
+
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.why-card {
+    text-align: center;
+    padding: 28px 18px;
+    background: #101c2a;
+    border: 1px solid #1e344c;
+    border-radius: 10px;
+}
+
+.why-card strong {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.why-card p {
+    color: var(--grey);
+    font-size: .9rem;
+}
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.cta {
+    background: linear-gradient(135deg, #0065dc, #008cff);
+    text-align: center;
+}
+
+.cta h2 {
+    font-size: clamp(2.4rem, 5vw, 4.5rem);
+    line-height: 1;
+    margin-bottom: 18px;
+}
+
+.cta p {
+    max-width: 650px;
+    margin: 0 auto 28px;
+}
+
+.cta .btn {
+    background: white;
+    color: #06101b;
+}
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact {
+    background: #eef3f7;
+    color: #111820;
+}
+
+.contact-grid {
+    max-width: 600px;
+    margin: auto;
+}
+
+.contact-card {
+    background: white;
+    border-radius: 14px;
+    padding: 40px;
+    text-align: center;
+    border: 1px solid #d6dfe8;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, .08);
+}
+
+.contact-icon {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.contact-card h3 {
+    margin-bottom: 7px;
+    font-size: 1.5rem;
+}
+
+.contact-card p {
+    color: #66717d;
+    margin-bottom: 20px;
+}
+
+.whatsapp-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 55px;
+    padding: 0 28px;
+    background: var(--green);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 900;
+    font-size: 1.05rem;
+    transition: .2s;
+}
+
+.whatsapp-button:hover {
+    background: #1ebe5b;
+    transform: translateY(-2px);
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    background: #03070c;
+    padding: 55px 0 25px;
+    color: #8291a2;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    padding-bottom: 35px;
+    border-bottom: 1px solid #1c2937;
+}
+
+footer h3 {
+    color: white;
+    margin-bottom: 15px;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 9px;
+}
+
+.footer-links a {
+    color: #8291a2;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    color: #32aaff;
+}
+
+.copyright {
+    padding-top: 22px;
+    font-size: .85rem;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 850px) {
+
+    nav {
+        display: none;
+        position: absolute;
+        top: 78px;
+        left: 0;
+        right: 0;
+        background: #050b14;
+        padding: 20px;
+        flex-direction: column;
+        align-items: stretch;
+        border-bottom: 1px solid #203247;
+    }
+
+    nav.active {
+        display: flex;
+    }
+
+    nav a {
+        padding: 10px;
+    }
+
+    .menu {
+        display: block;
+    }
+
+    .service-grid,
+    .radio-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .tuning-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .why-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .calculator-top {
+        grid-template-columns: 1fr;
+    }
+
+    .power-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 580px) {
+
+    .service-grid,
+    .radio-grid,
+    .why-grid,
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat {
+        border-right: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, .2);
+    }
+
+    .hero h1 {
+        letter-spacing: -2px;
+    }
+
+    section {
+        padding: 65px 0;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    .buttons .btn {
+        width: 100%;
+    }
+
+    .tuning-box {
+        min-height: 280px;
+        font-size: 7rem;
+    }
+
+    .calculator {
+        padding: 20px;
+    }
+
+    .stage-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .power-grid,
+    .gain-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .whatsapp-calc a {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header>
+
+<div class="container navbar">
+
+<a href="#" class="logo" aria-label="DAutos home">
+
+    <div class="logo-mark">D</div>
+
+    <div>
+        <strong>DAutos</strong>
+        <span>MOBILE AUTOMOTIVE SERVICES</span>
+    </div>
+
+</a>
+
+<button
+    class="menu"
+    id="menu"
+    type="button"
+    aria-label="Open menu"
+    aria-expanded="false"
+>
+    ☰
+</button>
+
+<nav class="nav-links">
+
+<a href="dautos.html">Home</a>
+<a href="dautos.html#services">Services</a>
+<a href="tuning.html">Tuning Calculator</a>
+<a href="dautos.html#radios">Car Radios</a>
+<a href="dautos.html#contact">WhatsApp</a>
+
+</nav>
+</div>
+
+</header>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+<div class="container">
+
+<div class="hero-content">
+
+    <div class="badge">
+        Mobile Automotive Specialists
+    </div>
+
+    <h1>
+        Your car.<br>
+        <span>Our expertise.</span>
+    </h1>
+
+    <p>
+        DAutos comes to you. Mobile ECU tuning, diagnostics,
+        performance upgrades, car radios, CarPlay, Android Auto
+        and audio installations.
+    </p>
+
+    <div class="buttons">
+
+        <a href="tuning.html" class="btn btn-blue">
+            Check Tuning Gains
+        </a>
+
+        <a
+            href="https://wa.me/353896032563?text=Hi%20DAutos%2C%20I%27d%20like%20to%20discuss%20my%20car."
+            class="btn btn-outline"
+            target="_blank"
+            rel="noopener"
+        >
+            WhatsApp DAutos
+        </a>
+
+    </div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     STATS
+========================================================= -->
+
+<div class="stats">
+
+<div class="container stats-grid">
+
+    <div class="stat">
+        <strong>🚗 MOBILE SERVICE</strong>
+        <span>We come to you</span>
+    </div>
+
+    <div class="stat">
+        <strong>⚡ ECU TUNING</strong>
+        <span>Performance focused</span>
+    </div>
+
+    <div class="stat">
+        <strong>🎵 CAR AUDIO</strong>
+        <span>Radios & upgrades</span>
+    </div>
+
+</div>
+
+</div>
+
+
+<!-- =========================================================
+     SERVICES
+========================================================= -->
+
+<section class="services" id="services">
+
+<div class="container">
+
+<div class="heading">
+
+    <div class="small">
+        What we do
+    </div>
+
+    <h2>
+        Automotive Services
+    </h2>
+
+    <p>
+        Professional mobile services designed to make your car
+        perform better and give you the features you want.
+    </p>
+
+</div>
+
+<div class="service-grid">
+
+    <div class="service">
+        <div class="service-icon">⚙️</div>
+        <h3>Car Tuning</h3>
+        <p>
+            Performance tuning and ECU remapping for compatible
+            vehicles.
+        </p>
+    </div>
+
+    <div class="service">
+        <div class="service-icon">🔧</div>
+        <h3>Diagnostics</h3>
+        <p>
+            Vehicle diagnostics to help identify faults and
+            warning lights.
+        </p>
+    </div>
+
+    <div class="service">
+        <div class="service-icon">📈</div>
+        <h3>ECU Remapping</h3>
+        <p>
+            Optimisation of compatible engine control systems
+            for performance and drivability.
+        </p>
+    </div>
+
+    <div class="service">
+        <div class="service-icon">🎵</div>
+        <h3>Car Radios</h3>
+        <p>
+            Installation and replacement of car radios and
+            infotainment systems.
+        </p>
+    </div>
+
+    <div class="service">
+        <div class="service-icon">🔊</div>
+        <h3>Car Audio</h3>
+        <p>
+            Upgrade your vehicle with improved speakers and
+            audio equipment.
+        </p>
+    </div>
+
+    <div class="service">
+        <div class="service-icon">📱</div>
+        <h3>CarPlay & Bluetooth</h3>
+        <p>
+            Modern smartphone connectivity upgrades for
+            compatible vehicles.
+        </p>
+    </div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     TUNING
+========================================================= -->
+
+<section class="tuning">
+
+<div class="container tuning-grid">
+
+<div>
+
+    <div
+        class="heading"
+        style="text-align:left;margin:0 0 25px 0"
+    >
+
+        <div class="small">
+            Mobile tuning
+        </div>
+
+        <h2>
+            We come to you.
+        </h2>
+
+    </div>
+
+    <p>
+        No need to leave your car at a garage. DAutos provides
+        mobile automotive services at a location that suits you,
+        subject to access and suitability.
+    </p>
+
+    <p>
+        Use our tuning calculator to select your car and see
+        an estimated Stage 1, Stage 2 or Stage 3 result.
+    </p>
+
+    <ul class="checks">
+
+        <li>Mobile service</li>
+        <li>Professional equipment</li>
+        <li>Vehicle diagnostics</li>
+        <li>Performance tuning</li>
+        <li>WhatsApp booking</li>
+
+    </ul>
+
+    <a href="tuning.html" class="btn btn-blue">
+        Use Tuning Calculator
+    </a>
+
+</div>
+
+<div class="tuning-box">
+    🚘
+</div>
+
+</div>
+
+</section>
+<!-- =========================================================
+     RADIO
+========================================================= -->
+
+<section class="radio" id="radios">
+
+<div class="container">
+
+<div class="heading">
+
+    <div class="small">
+        Audio & infotainment
+    </div>
+
+    <h2>
+        Upgrade your car's sound.
+    </h2>
+
+    <p>
+        Looking for a newer radio or better connectivity?
+        DAutos can help with compatible vehicle installations.
+    </p>
+
+</div>
+
+<div class="radio-grid">
+
+    <div class="radio-card">
+        <div class="icon">📻</div>
+        <h3>Radio Replacement</h3>
+        <p>
+            Replace an old factory radio with a modern
+            compatible unit.
+        </p>
+    </div>
+
+    <div class="radio-card">
+        <div class="icon">📱</div>
+        <h3>Apple CarPlay</h3>
+        <p>
+            Add smartphone integration and access compatible
+            apps from your vehicle.
+        </p>
+    </div>
+
+    <div class="radio-card">
+        <div class="icon">🤖</div>
+        <h3>Android Auto</h3>
+        <p>
+            Compatible Android smartphone integration for
+            supported systems.
+        </p>
+    </div>
+
+    <div class="radio-card">
+        <div class="icon">🔊</div>
+        <h3>Speakers</h3>
+        <p>
+            Upgrade your factory speakers for a better
+            listening experience.
+        </p>
+    </div>
+
+    <div class="radio-card">
+        <div class="icon">🎶</div>
+        <h3>Audio Upgrades</h3>
+        <p>
+            Discuss amplifiers, speakers and other compatible
+            audio upgrades.
+        </p>
+    </div>
+
+    <div class="radio-card">
+        <div class="icon">🔵</div>
+        <h3>Bluetooth</h3>
+        <p>
+            Add or improve hands-free calling and wireless
+            music where compatible.
+        </p>
+    </div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     WHY
+========================================================= -->
+
+<section class="why">
+
+<div class="container">
+
+<div class="heading">
+
+    <div class="small">
+        Why DAutos
+    </div>
+
+    <h2>
+        Simple. Mobile. Professional.
+    </h2>
+
+</div>
+
+<div class="why-grid">
+
+    <div class="why-card">
+        <strong>📍 Mobile</strong>
+        <p>We come to your location where possible.</p>
+    </div>
+
+    <div class="why-card">
+        <strong>🛠️ Experienced</strong>
+        <p>Automotive-focused services.</p>
+    </div>
+
+    <div class="why-card">
+        <strong>⚡ Convenient</strong>
+        <p>Book a time that suits you.</p>
+    </div>
+
+    <div class="why-card">
+        <strong>💬 WhatsApp</strong>
+        <p>Easy direct communication.</p>
+    </div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     CTA
+========================================================= -->
+
+<section class="cta">
+
+<div class="container">
+
+    <h2>
+        Ready to upgrade your car?
+    </h2>
+
+    <p>
+        Use the tuning calculator or message DAutos directly
+        on WhatsApp to discuss your vehicle.
+    </p>
+
+    <a
+        href="https://wa.me/353896032563?text=Hi%20DAutos%2C%20I%27d%20like%20to%20book%20a%20job."
+        class="btn"
+        target="_blank"
+        rel="noopener"
+    >
+        💬 WhatsApp DAutos
+    </a>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     CONTACT
+========================================================= -->
+
+<section class="contact" id="contact">
+
+<div class="container">
+
+<div class="heading">
+
+    <div class="small">
+        Get in touch
+    </div>
+
+    <h2>
+        Message DAutos
+    </h2>
+
+    <p>
+        WhatsApp us with your car make, model, year, engine
+        and what you would like done.
+    </p>
+
+</div>
+
+<div class="contact-grid">
+
+    <div class="contact-card">
+
+        <div class="contact-icon">
+            💬
+        </div>
+
+        <h3>
+            WhatsApp DAutos
+        </h3>
+
+        <p>
+            0896032563
+        </p>
+
+        <a
+            class="whatsapp-button"
+            href="https://wa.me/353896032563?text=Hi%20DAutos%2C%20I%27d%20like%20to%20discuss%20my%20car."
+            target="_blank"
+            rel="noopener"
+        >
+            💬 Message on WhatsApp
+        </a>
+
+    </div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+<div>
+
+    <a href="#" class="logo">
+
+        <div class="logo-mark">
+            D
+        </div>
+
+        <div>
+            <strong>DAutos</strong>
+            <span>MOBILE AUTOMOTIVE SERVICES</span>
+        </div>
+
+    </a>
+
+    <br>
+
+    <p>
+        Mobile car tuning, diagnostics, radios and
+        automotive upgrades.
+    </p>
+
+    <br>
+
+    <a
+        href="https://wa.me/353896032563"
+        target="_blank"
+        rel="noopener"
+        style="
+            display:inline-block;
+            background:#25d366;
+            color:white;
+            padding:10px 17px;
+            border-radius:6px;
+            text-decoration:none;
+            font-weight:bold;
+        "
+    >
+        💬 WhatsApp DAutos
+    </a>
+
+</div>
+
+
+<div>
+
+    <h3>
+        Services
+    </h3>
+
+    <ul class="footer-links">
+
+        <li>
+            <a href="#services">Car Tuning</a>
+        </li>
+
+        <li>
+            <a href="#services">Diagnostics</a>
+        </li>
+
+        <li>
+            <a href="tuning.html">Tuning Calculator</a>
+        </li>
+
+        <li>
+            <a href="#radios">Car Radios</a>
+        </li>
+
+        <li>
+            <a href="#radios">Car Audio</a>
+        </li>
+
+    </ul>
+
+</div>
+
+</div>
+
+
+<div class="copyright">
+
+    © <span id="year"></span> DAutos.
+    All rights reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+</script>
+
+</body>
+</html>

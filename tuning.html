@@ -1,0 +1,2012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DAutos | Tuning Calculator</title>
+
+<meta name="description"
+content="DAutos vehicle tuning calculator. Select your make, model, year and engine to view estimated Stage 1, Stage 2 and Stage 3 tuning results.">
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #050b14;
+    color: #fff;
+    line-height: 1.6;
+}
+
+:root {
+    --blue: #087cff;
+    --blue2: #0054c7;
+    --blue3: #19a0ff;
+    --dark: #07101b;
+    --dark2: #0d1724;
+    --dark3: #152235;
+    --border: #29415d;
+    --grey: #9ba9ba;
+    --green: #25d366;
+    --red: #ff4242;
+}
+
+.container {
+    width: min(1180px, calc(100% - 32px));
+    margin: auto;
+}
+
+/* HEADER */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(5,11,20,.97);
+    border-bottom: 1px solid #23344a;
+    backdrop-filter: blur(12px);
+}
+
+.navbar {
+    min-height: 78px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    color: white;
+    text-decoration: none;
+}
+
+.logo-mark {
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg,var(--blue3),var(--blue2));
+    border-radius: 9px;
+    font-size: 22px;
+    font-weight: 900;
+    transform: skew(-7deg);
+}
+
+.logo strong {
+    display: block;
+    font-size: 1.45rem;
+}
+
+.logo span {
+    display: block;
+    color: #91a0b3;
+    font-size: .62rem;
+    letter-spacing: 2px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.nav-links a {
+    color: #e9f1fa;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    color: var(--blue3);
+}
+
+/* HERO */
+
+.hero {
+    padding: 90px 0 70px;
+    background:
+        radial-gradient(circle at 80% 30%, #064b92 0%, transparent 35%),
+        linear-gradient(135deg,#07111e,#050b14);
+}
+
+.hero-content {
+    max-width: 850px;
+    margin: auto;
+    text-align: center;
+}
+
+.badge {
+    display: inline-block;
+    padding: 7px 14px;
+    border: 1px solid #155b96;
+    border-radius: 30px;
+    color: #36a9ff;
+    background: rgba(8,124,255,.08);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: .72rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(3rem,7vw,5.8rem);
+    line-height: .95;
+    letter-spacing: -3px;
+    margin-bottom: 22px;
+}
+
+.hero h1 span {
+    color: var(--blue);
+}
+
+.hero p {
+    color: #bdcad8;
+    font-size: 1.1rem;
+}
+
+/* CALCULATOR */
+
+.calculator-section {
+    padding: 70px 0 100px;
+}
+
+.calculator {
+    max-width: 1050px;
+    margin: auto;
+    padding: 35px;
+    background: #0d1724;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: 0 25px 70px rgba(0,0,0,.35);
+}
+
+.calculator-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.calculator-heading h2 {
+    font-size: 2.4rem;
+    margin-bottom: 8px;
+}
+
+.calculator-heading p {
+    color: var(--grey);
+}
+
+/* FIELDS */
+
+.fields {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 18px;
+}
+
+.field label {
+    display: block;
+    color: #c5d2e0;
+    font-size: .8rem;
+    font-weight: bold;
+    margin-bottom: 7px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.field select {
+    width: 100%;
+    min-height: 54px;
+    padding: 0 14px;
+    background: #07101b;
+    color: white;
+    border: 1px solid #344d67;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.field select:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(8,124,255,.12);
+}
+
+.field select:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+/* STAGES */
+
+.stage-area {
+    margin-top: 25px;
+}
+
+.stage-title {
+    color: #c5d2e0;
+    font-size: .8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.stages {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+}
+
+.stage {
+    min-height: 55px;
+    border: 1px solid #36516c;
+    background: #091522;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 900;
+    font-size: 1rem;
+    transition: .2s;
+}
+
+.stage:hover,
+.stage.active {
+    background: var(--blue);
+    border-color: var(--blue);
+}
+
+/* RESULT */
+
+.result {
+    display: none;
+    margin-top: 30px;
+    padding: 30px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(8,124,255,.18),
+            rgba(7,16,27,.95)
+        );
+    border: 1px solid #205d94;
+    border-radius: 14px;
+}
+
+.result.show {
+    display: block;
+    animation: fadeIn .25s ease;
+}
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+.result-title {
+    text-align: center;
+    color: #6fc2ff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: .75rem;
+    font-weight: bold;
+}
+
+.result-car {
+    text-align: center;
+    font-size: 1.55rem;
+    font-weight: 900;
+    margin: 7px 0;
+}
+
+.result-stage {
+    text-align: center;
+    color: #2fa9ff;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.power-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 12px;
+}
+
+.power-box {
+    padding: 20px 10px;
+    text-align: center;
+    background: #07111d;
+    border: 1px solid #233b55;
+    border-radius: 9px;
+}
+
+.power-box span {
+    display: block;
+    color: #91a4b8;
+    font-size: .75rem;
+    margin-bottom: 5px;
+}
+
+.power-box strong {
+    font-size: 1.5rem;
+}
+
+.power-box.highlight {
+    border-color: var(--blue);
+}
+
+.power-box.highlight strong {
+    color: #2fa9ff;
+}
+
+.gains {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.gain {
+    padding: 17px;
+    background: #07111d;
+    border-radius: 9px;
+    text-align: center;
+}
+
+.gain span {
+    display: block;
+    color: #91a4b8;
+    font-size: .75rem;
+}
+
+.gain strong {
+    color: #2fa9ff;
+    font-size: 1.3rem;
+}
+
+.notice {
+    margin-top: 20px;
+    padding: 15px;
+    background: #171f29;
+    border: 1px solid #2c4258;
+    border-radius: 8px;
+    color: #aebdcb;
+    font-size: .83rem;
+    line-height: 1.6;
+}
+
+.whatsapp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 55px;
+    margin-top: 22px;
+    padding: 0 20px;
+    background: var(--green);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 900;
+}
+
+.whatsapp:hover {
+    background: #1ebe5b;
+}
+
+/* FOOTER */
+
+footer {
+    padding: 35px 0;
+    background: #03070c;
+    border-top: 1px solid #1c2937;
+    color: #8291a2;
+}
+
+.footer-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.footer-inner a {
+    color: #8291a2;
+    text-decoration: none;
+}
+
+.footer-inner a:hover {
+    color: #32aaff;
+}
+
+/* MOBILE */
+
+@media(max-width:700px) {
+
+    .nav-links {
+        display: none;
+    }
+
+    .calculator {
+        padding: 20px;
+    }
+
+    .fields {
+        grid-template-columns: 1fr;
+    }
+
+    .stages {
+        grid-template-columns: 1fr;
+    }
+
+    .power-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+    }
+
+}
+
+@media(max-width:450px) {
+
+    .power-grid,
+    .gains {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        padding-top: 60px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="container navbar">
+
+<a href="dautos.html" class="logo">
+
+<div class="logo-mark">D</div>
+
+<div>
+<strong>DAutos</strong>
+<span>MOBILE AUTOMOTIVE SERVICES</span>
+</div>
+
+</a>
+
+<nav class="nav-links">
+
+<a href="dautos.html">Home</a>
+<a href="dautos.html#services">Services</a>
+<a href="tuning.html">Tuning Calculator</a>
+<a href="dautos.html#radios">Car Radios</a>
+<a href="dautos.html#contact">WhatsApp</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<section class="hero">
+
+<div class="container hero-content">
+
+<div class="badge">
+DAutos Tuning Database
+</div>
+
+<h1>
+Find Your <span>Car.</span>
+</h1>
+
+<p>
+Select your manufacturer, model, year and engine to see
+estimated Stage 1, Stage 2 and Stage 3 tuning figures.
+</p>
+
+</div>
+
+</section>
+
+
+<section class="calculator-section">
+
+<div class="container">
+
+<div class="calculator">
+
+<div class="calculator-heading">
+
+<h2>Tuning Calculator</h2>
+
+<p>
+50+ manufacturers • 150+ popular models • thousands of
+year/engine combinations
+</p>
+
+</div>
+
+
+<div class="fields">
+
+<div class="field">
+
+<label for="make">
+1. Manufacturer
+</label>
+
+<select id="make">
+<option value="">Select manufacturer</option>
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label for="model">
+2. Model
+</label>
+
+<select id="model" disabled>
+<option value="">Select model</option>
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label for="year">
+3. Year
+</label>
+
+<select id="year" disabled>
+<option value="">Select year</option>
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label for="engine">
+4. Engine
+</label>
+
+<select id="engine" disabled>
+<option value="">Select engine</option>
+</select>
+
+</div>
+
+</div>
+
+
+<div class="stage-area">
+
+<div class="stage-title">
+5. Tuning Stage
+</div>
+
+<div class="stages">
+
+<button class="stage active" data-stage="1">
+Stage 1
+</button>
+
+<button class="stage" data-stage="2">
+Stage 2
+</button>
+
+<button class="stage" data-stage="3">
+Stage 3
+</button>
+
+</div>
+
+</div>
+
+
+<div id="result" class="result">
+
+<div class="result-title">
+Estimated tuning result
+</div>
+
+<div id="resultCar" class="result-car"></div>
+
+<div id="resultStage" class="result-stage"></div>
+
+
+<div class="power-grid">
+
+<div class="power-box">
+
+<span>Original HP</span>
+
+<strong id="stockHp">-</strong>
+
+</div>
+
+
+<div class="power-box highlight">
+
+<span>Estimated HP</span>
+
+<strong id="tunedHp">-</strong>
+
+</div>
+
+
+<div class="power-box">
+
+<span>Original Torque</span>
+
+<strong id="stockTorque">-</strong>
+
+</div>
+
+
+<div class="power-box highlight">
+
+<span>Estimated Torque</span>
+
+<strong id="tunedTorque">-</strong>
+
+</div>
+
+</div>
+
+
+<div class="gains">
+
+<div class="gain">
+
+<span>Horsepower Gain</span>
+
+<strong id="hpGain">-</strong>
+
+</div>
+
+<div class="gain">
+
+<span>Torque Gain</span>
+
+<strong id="torqueGain">-</strong>
+
+</div>
+
+</div>
+
+
+<div class="notice">
+
+<strong>Important:</strong>
+
+These figures are estimates for calculator purposes only.
+Actual results depend on the exact vehicle specification,
+engine code, ECU, gearbox, vehicle condition, fuel,
+modifications and the calibration used. Always confirm the
+exact vehicle before quoting a customer.
+
+</div>
+
+
+<a
+id="whatsapp"
+class="whatsapp"
+href="#"
+target="_blank"
+rel="noopener">
+
+💬 Ask DAutos About This Tune
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<div class="container footer-inner">
+
+<div>
+© <span id="copyrightYear"></span> DAutos
+</div>
+
+<div>
+<a href="dautos.html">
+Back to DAutos
+</a>
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* ==========================================================
+   DAUTOS LARGE VEHICLE DATABASE
+   ==========================================================
+
+   This database deliberately covers popular European/Irish
+   vehicles and older used-car models.
+
+   Instead of manually writing thousands of identical year
+   entries, the code generates the year/engine combinations
+   from each model's configuration.
+
+   This gives the calculator hundreds/thousands of selectable
+   combinations while keeping the file manageable.
+
+========================================================== */
+
+
+/* ==========================================================
+   ENGINE PROFILES
+==========================================================
+
+   hp / torque are representative baseline figures.
+
+   They should be verified against the exact engine code before
+   using the calculator as a customer quotation tool.
+
+========================================================== */
+
+const ENGINE_PROFILES = {
+
+    petrolSmall: [
+        ["1.0 Turbo", 100, 170],
+        ["1.2", 75, 110],
+        ["1.2 Turbo", 110, 175],
+        ["1.4", 90, 130],
+        ["1.4 Turbo", 120, 200],
+        ["1.5", 110, 150],
+        ["1.5 Turbo", 150, 250],
+        ["1.6", 115, 155],
+        ["1.6 Turbo", 150, 240]
+    ],
+
+    dieselSmall: [
+        ["1.4 TDI", 90, 230],
+        ["1.5 dCi", 90, 220],
+        ["1.5 BlueHDi", 100, 250],
+        ["1.6 TDI", 105, 250],
+        ["1.6 HDi", 110, 240],
+        ["1.6 CRDi", 110, 260],
+        ["1.7 CDTi", 125, 280],
+        ["1.9 TDI", 105, 250]
+    ],
+
+    dieselMedium: [
+        ["1.6 TDI", 115, 250],
+        ["1.6 HDi", 120, 300],
+        ["1.7 CDTi", 130, 300],
+        ["1.9 TDI", 130, 310],
+        ["2.0 TDI", 140, 320],
+        ["2.0 TDI", 150, 340],
+        ["2.0 HDi", 150, 340],
+        ["2.0 dCi", 150, 340],
+        ["2.0 CRDi", 150, 350]
+    ],
+
+    petrolMedium: [
+        ["1.8", 125, 170],
+        ["1.8 Turbo", 160, 250],
+        ["2.0", 150, 200],
+        ["2.0 Turbo", 200, 320],
+        ["2.0 TFSI", 190, 320],
+        ["2.0 TSI", 200, 320],
+        ["2.0 EcoBoost", 200, 300],
+        ["2.0 GDI", 165, 200]
+    ],
+
+    dieselLarge: [
+        ["2.0 TDI", 170, 350],
+        ["2.0 TDI", 190, 400],
+        ["2.0 BiTDI", 240, 500],
+        ["2.2 HDi", 170, 370],
+        ["2.2 dCi", 175, 380],
+        ["2.2 CRDi", 200, 440],
+        ["2.2 i-DTEC", 180, 380],
+        ["2.3 dCi", 190, 450],
+        ["2.4 D", 190, 400]
+    ],
+
+    petrolLarge: [
+        ["2.5", 190, 250],
+        ["2.5 Turbo", 250, 350],
+        ["2.5 TFSI", 400, 480],
+        ["3.0", 250, 300],
+        ["3.0 Turbo", 300, 450],
+        ["3.0 TDI", 245, 500],
+        ["3.0d", 245, 520],
+        ["3.0 TFSI", 300, 440],
+        ["3.0 TwinPower Turbo", 326, 450],
+        ["4.0 V8", 420, 550]
+    ],
+
+    hybrid: [
+        ["1.5 Hybrid", 116, 140],
+        ["1.8 Hybrid", 122, 142],
+        ["2.0 Hybrid", 184, 190],
+        ["2.5 Hybrid", 218, 221],
+        ["2.5 Hybrid", 248, 270]
+    ],
+
+    electric: [
+        ["Standard Range EV", 150, 300],
+        ["Long Range EV", 200, 350],
+        ["Performance EV", 300, 450]
+    ]
+
+};
+
+
+/* ==========================================================
+   HELPER TO BUILD MODELS
+========================================================== */
+
+function model(
+    name,
+    from,
+    to,
+    profiles
+) {
+
+    return {
+        name,
+        from,
+        to,
+        profiles
+    };
+
+}
+
+
+/* ==========================================================
+   55+ MAKES
+========================================================== */
+
+const vehicleDatabase = {
+
+    "Abarth": [
+        model("500", 2008, 2022, ["petrolSmall"]),
+        model("595", 2012, 2022, ["petrolSmall"]),
+        model("124 Spider", 2016, 2020, ["petrolMedium"])
+    ],
+
+    "Alfa Romeo": [
+        model("147", 2005, 2010, ["petrolSmall","dieselSmall"]),
+        model("159", 2006, 2011, ["petrolMedium","dieselMedium"]),
+        model("Giulietta", 2010, 2020, ["petrolSmall","dieselSmall"]),
+        model("Giulia", 2016, 2022, ["petrolMedium","dieselMedium"]),
+        model("Stelvio", 2017, 2022, ["petrolMedium","dieselMedium"])
+    ],
+
+    "Audi": [
+        model("A1", 2011, 2022, ["petrolSmall","dieselSmall"]),
+        model("A3", 2005, 2022, ["petrolSmall","petrolMedium","dieselSmall","dieselMedium"]),
+        model("A4", 2005, 2022, ["petrolMedium","dieselMedium","dieselLarge"]),
+        model("A5", 2008, 2022, ["petrolMedium","petrolLarge","dieselMedium"]),
+        model("A6", 2005, 2022, ["petrolMedium","petrolLarge","dieselMedium","dieselLarge"]),
+        model("A7", 2011, 2022, ["petrolLarge","dieselLarge"]),
+        model("Q3", 2012, 2022, ["petrolSmall","petrolMedium","dieselMedium"]),
+        model("Q5", 2009, 2022, ["petrolMedium","dieselMedium","dieselLarge"]),
+        model("Q7", 2006, 2022, ["petrolLarge","dieselLarge"]),
+        model("TT", 2007, 2022, ["petrolMedium","petrolLarge"])
+    ],
+
+    "BMW": [
+        model("1 Series", 2005, 2022, ["petrolSmall","petrolMedium","dieselSmall","dieselMedium"]),
+        model("2 Series", 2014, 2022, ["petrolSmall","petrolMedium","dieselMedium"]),
+        model("3 Series", 2005, 2022, ["petrolMedium","petrolLarge","dieselMedium","dieselLarge"]),
+        model("4 Series", 2014, 2022, ["petrolMedium","petrolLarge","dieselMedium"]),
+        model("5 Series", 2005, 2022, ["petrolMedium","petrolLarge","dieselLarge"]),
+        model("6 Series", 2005, 2018, ["petrolLarge","dieselLarge"]),
+        model("7 Series", 2005, 2022, ["petrolLarge","dieselLarge"]),
+        model("X1", 2010, 2022, ["petrolSmall","petrolMedium","dieselMedium"]),
+        model("X3", 2005, 2022, ["petrolMedium","dieselMedium","dieselLarge"]),
+        model("X5", 2005, 2022, ["petrolLarge","dieselLarge"]),
+        model("X6", 2008, 2022, ["petrolLarge","dieselLarge"])
+    ],
+
+    "Bentley": [
+        model("Continental GT", 2005, 2022, ["petrolLarge"]),
+        model("Flying Spur", 2005, 2022, ["petrolLarge"]),
+        model("Bentayga", 2016, 2022, ["petrolLarge","dieselLarge"])
+    ],
+
+    "Citroen": [
+        model("C1", 2005, 2021, ["petrolSmall"]),
+        model("C3", 2005, 2022, ["petrolSmall","dieselSmall"]),
+        model("C4", 2005, 2022, ["petrolSmall","petrolMedium","dieselSmall"]),
+        model("C5", 2005, 2017, ["petrolMedium","dieselMedium","dieselLarge"]),
+        model("C4 Picasso", 2007, 2018, ["petrolSmall","dieselSmall","dieselMedium"]),
+        model("C5 Aircross", 2018, 2022, ["petrolMedium","dieselMedium","hybrid"])
+    ],
+
+    "Cupra": [
+        model("Ateca", 2018, 2022, ["petrolMedium"]),
+        model("Formentor", 2020, 2022, ["petrolMedium","petrolLarge"]),
+        model("Leon", 2020, 2022, ["petrolMedium"])
+    ],
+
+    "Dacia": [
+        model("Sandero", 2008, 2022, ["petrolSmall","dieselSmall"]),
+        model("Duster", 2010, 2022, ["petrolSmall","petrolMedium","dieselMedium"]),
+        model("Logan", 2005, 2022, ["petrolSmall","dieselSmall"])
+    ],
+
+    "DS": [
+        model("DS3", 2010, 2022, ["petrolSmall","dieselSmall"]),
+        model("DS4", 2011, 2022, ["petrolSmall","petrolMedium","dieselSmall"]),
+        model("DS5", 2011, 2018, ["petrolMedium","dieselMedium","hybrid"])
+    ],
+
+    "Fiat": [
+        model("500", 2007, 2022, ["petrolSmall","dieselSmall"]),
+        model("Panda", 2005, 2022, ["petrolSmall","dieselSmall"]),
+        model("Punto", 2005, 2018, ["petrolSmall","dieselSmall"]),
+        model("Bravo", 2007, 2014, ["petrolSmall","dieselMedium"]),
+        model("Tipo", 2016, 2022, ["petrolSmall","dieselSmall","dieselMedium"]),
+        model("Doblo", 2005, 2022, ["petrolSmall","dieselSmall","dieselMedium"])
+    ],
+
+    "Ford": [
+        model("Fiesta", 2005, 2022, ["petrolSmall","dieselSmall"]),
+        model("Focus", 2005, 2022, ["petrolSmall","petrolMedium","dieselSmall","dieselMedium"]),
+        model("Mondeo", 2005, 2022, ["petrolMedium","dieselMedium","dieselLarge"]),
+        model("Galaxy", 2006, 2022, ["petrolMedium","dieselMedium"]),
+        model("Kuga", 2008, 2022, ["petrolMedium","dieselMedium"]),
+        model("C-Max", 2005, 2019, ["petrolSmall","dieselSmall","dieselMedium"]),
+        model("S-Max", 2006, 2022, ["petrolMedium","dieselMedium"]),
+        model("Ranger", 2006, 2022, ["petrolLarge","dieselLarge"])
+    ],
+
+    "Honda": [
+        model("Jazz", 2005, 2022, ["petrolSmall","hybrid"]),
+        model("Civic", 2005, 2022, ["petrolSmall","petrolMedium","dieselSmall"]),
+        model("Accord", 2005, 2015, ["petrolMedium","dieselMedium"]),
+        model("CR-V", 2005, 2022, ["petrolMedium","dieselMedium"]),
+        model("HR-V", 2015, 2022, ["petrolSmall","petrolMedium"])
+    ],
+
+    "Hyundai": [
+        model("i10", 2008, 2022, ["petrolSmall"]),
+        model("i20", 2008, 2022, ["petrolSmall","dieselSmall"]),
+        model("i30", 2007, 2022, ["petrolSmall","petrolMedium","dieselSmall","dieselMedium"]),
+        model("Tucson", 2005, 2022, ["petrolMedium","dieselMedium","hybrid"]),
+        model("Santa Fe", 2006, 2022, ["petrolMedium","dieselLarge","hybrid"]),
+        model("Kona", 2017, 2022, ["petrolSmall","petrolMedium","dieselSmall","electric","hybrid"])
+    ],
+
+    "Jaguar": [
+        model("XE", 2015, 2022, ["petrolMedium","dieselMedium"]),
+        model("XF", 2008, 2022, ["petrolMedium","petrolLarge","dieselMedium","dieselLarge"]),
+        model("XJ", 2005, 2019, ["petrolLarge","dieselLarge"]),
+        model("F-Pace", 2016, 2022, ["petrolLarge","dieselLarge"])
+    ],
+
+    "Jeep": [
+        model("Renegade", 2015, 2022, ["petrolSmall","dieselSmall","dieselMedium"]),
+        model("Compass", 2007, 2022, ["petrolMedium","dieselMedium"]),
+        model("Cherokee", 2005, 2022, ["petrolMedium","dieselMedium"]),
+        model("Grand Cherokee", 2005, 2022, ["petrolLarge","dieselLarge"]),
+        model("Wrangler", 2005, 2022, ["petrolLarge","dieselLarge"])
+    ],
+
+    "Kia": [
+        model("Picanto", 2005, 2022, ["petrolSmall"]),
+        model("Rio", 2005, 2022, ["petrolSmall","dieselSmall"]),
+        model("Ceed", 2007, 2022, ["petrolSmall","petrolMedium","dieselSmall","dieselMedium"]),
+        model("Sportage", 2005, 2022, ["petrolMedium","dieselMedium","hybrid"]),
+        model("Sorento", 2005, 2022, ["petrolMedium","dieselLarge","hybrid"]),
+        model("Niro", 2016, 2022, ["hybrid","electric"])
+    ],
+
+    "Land Rover": [
+        model("Freelander", 2005, 2014, ["petrolMedium","dieselMedium"]),
+        model("Discovery", 2005, 2022, ["petrolLarge","dieselLarge"]),
+        model("Discovery Sport", 2015, 2022, ["petrolMedium","dieselMedium"]),
+        model("Range Rover Sport", 2005, 2022, ["petrolLarge","dieselLarge"]),
+        model("Range Rover", 2005, 2022, ["petrolLarge","dieselLarge"]),
+        model("Evoque", 2011, 2022, ["petrolMedium","dieselMedium"])
+    ],
+
+    "Lexus": [
+        model("IS", 2005, 2022, ["petrolMedium","petrolLarge","hybrid"]),
+        model("GS", 2005, 2019, ["petrolLarge","hybrid"]),
+        model("ES", 2007, 2022, ["petrolMedium","hybrid"]),
+        model("NX", 2014, 2022, ["petrolMedium","hybrid"]),
+        model("RX", 2005, 2022, ["petrolLarge","hybrid"])
+    ],
+
+    "Mazda": [
+        model("Mazda2", 2005, 2022, ["petrolSmall","dieselSmall"]),
+        model("Mazda3", 2005, 2022, ["petrolSmall","petrolMedium","dieselMedium"]),
+        model("Mazda6", 2005, 2022, ["petrolMedium","dieselMedium"]),
+        model("CX-3", 2015, 2022, ["petrolSmall","dieselSmall"]),
+        model("CX-5", 2012, 2022, ["petrolMedium","dieselMedium"]),
+        model("CX-30", 2019, 2022, ["petrolMedium"])
+    ],
+
+    "Mercedes-Benz": [
+        model("A-Class", 2005, 2022, ["petrolSmall","petrolMedium","dieselSmall","dieselMedium"]),
+        model("B-Class", 2005, 2022, ["petrolSmall","petrolMedium","dieselSmall","dieselMedium"]),
+        model("C-Class", 2005, 2022, ["petrolMedium","petrolLarge","dieselMedium","dieselLarge"]),
+        model("E-Class", 2005, 2022, ["petrolMedium","petrolLarge","dieselMedium","dieselLarge"]),
+        model("S-Class", 2005, 2022, ["petrolLarge","dieselLarge"]),
+        model("CLA", 2013, 2022, ["petrolSmall","petrolMedium","dieselMedium"]),
+        model("GLA", 2014, 2022, ["petrolSmall","petrolMedium","dieselMedium"]),
+        model("GLC", 2015, 2022, ["petrolMedium","dieselLarge"]),
+        model("GLE", 2015, 2022, ["petrolLarge","dieselLarge"])
+    ],
+
+    "MINI": [
+        model("Hatch", 2007, 2022, ["petrolSmall","dieselSmall"]),
+        model("Clubman", 2007, 2022, ["petrolSmall","petrolMedium","dieselSmall"]),
+        model("Countryman", 2010, 2022, ["petrolSmall","petrolMedium","dieselMedium"])
+    ],
+
+    "Mitsubishi": [
+        model("Colt", 2005, 2012, ["petrolSmall","dieselSmall"]),
+        model("Lancer", 2005, 2017, ["petrolMedium"]),
+        model("ASX", 2010, 2022, ["petrolSmall","dieselMedium"]),
+        model("Outlander", 2005, 2022, ["petrolMedium","dieselMedium","hybrid"])
+    ],
+
+    "Nissan": [
+        model("Micra", 2005, 2022, ["petrolSmall","dieselSmall"]),
+        model("Note", 2006, 2017, ["petrolSmall","dieselSmall"]),
+        model("Juke", 2010, 2022, ["petrolSmall","petrolMedium","dieselSmall"]),
+        model("Qashqai", 2007, 2022, ["petrolSmall","petrolMedium","dieselSmall","dieselMedium"]),
+        model("X-Trail", 2005, 2022, ["petrolMedium","dieselMedium","hybrid"]),
+        model("Leaf", 2011, 2022, ["electric"])
+    ],
+
+    "Opel": [
+        model("Corsa", 2005, 2022, ["petrolSmall","dieselSmall"]),
+        model("Astra", 2005, 2022, ["petrolSmall","petrolMedium","dieselSmall","dieselMedium"]),
+        model("Insignia", 2009, 2022, ["petrolMedium","dieselMedium","dieselLarge"]),
+        model("Mokka", 2013, 2022, ["petrolSmall","dieselSmall","dieselMedium"])
+    ],
+
+    "Peugeot": [
+        model("107", 2005, 2014, ["petrolSmall"]),
+        model("108", 2014, 2021, ["petrolSmall"]),
+        model("208", 2012, 2022, ["petrolSmall","dieselSmall"]),
+        model("308", 2007, 2022, ["petrolSmall","petrolMedium","dieselSmall","dieselMedium"]),
+        model("508", 2011, 2022, ["petrolMedium","dieselMedium","hybrid"]),
+        model("2008", 2013, 2022, ["petrolSmall","dieselSmall"]),
+        model("3008", 2009, 2022, ["petrolMedium","dieselMedium","hybrid"]),
+        model("5008", 2009, 2022, ["petrolMedium","dieselMedium"])
+    ],
+
+    "Porsche": [
+        model("Boxster", 2005, 2022, ["petrolLarge"]),
+        model("Cayman", 2005, 2022, ["petrolLarge"]),
+        model("911", 2005, 2022, ["petrolLarge"]),
+        model("Cayenne", 2005, 2022, ["petrolLarge","dieselLarge"]),
+        model("Macan", 2014, 2022, ["petrolLarge","dieselLarge"]),
+        model("Panamera", 2010, 2022, ["petrolLarge","dieselLarge"])
+    ],
+
+    "Renault": [
+        model("Clio", 2005, 2022, ["petrolSmall","dieselSmall"]),
+        model("Megane", 2005, 2022, ["petrolSmall","petrolMedium","dieselSmall","dieselMedium"]),
+        model("Laguna", 2005, 2015, ["petrolMedium","dieselMedium"]),
+        model("Scenic", 2005, 2022, ["petrolSmall","dieselSmall","dieselMedium"]),
+        model("Kadjar", 2015, 2022, ["petrolSmall","dieselMedium"]),
+        model("Captur", 2013, 2022, ["petrolSmall","dieselSmall"])
+    ],
+
+    "SEAT": [
+        model("Ibiza", 2005, 2022, ["petrolSmall","dieselSmall"]),
+        model("Leon", 2005, 2022, ["petrolSmall","petrolMedium","dieselSmall","dieselMedium"]),
+        model("Altea", 2005, 2015, ["petrolMedium","dieselMedium"]),
+        model("Ateca", 2016, 2022, ["petrolSmall","petrolMedium","dieselMedium"]),
+        model("Tarraco", 2018, 2022, ["petrolMedium","dieselMedium"])
+    ],
+
+    "Skoda": [
+        model("Fabia", 2005, 2022, ["petrolSmall","dieselSmall"]),
+        model("Octavia", 2005, 2022, ["petrolSmall","petrolMedium","dieselSmall","dieselMedium"]),
+        model("Superb", 2005, 2022, ["petrolMedium","dieselMedium","dieselLarge"]),
+        model("Yeti", 2009, 2017, ["petrolSmall","dieselMedium"]),
+        model("Karoq", 2017, 2022, ["petrolSmall","petrolMedium","dieselMedium"]),
+        model("Kodiaq", 2017, 2022, ["petrolMedium","dieselMedium"])
+    ],
+
+    "Smart": [
+        model("Fortwo", 2005, 2022, ["petrolSmall"]),
+        model("Forfour", 2005, 2022, ["petrolSmall"])
+    ],
+
+    "Subaru": [
+        model("Impreza", 2005, 2022, ["petrolMedium","petrolLarge"]),
+        model("Legacy", 2005, 2015, ["petrolMedium","dieselMedium"]),
+        model("Forester", 2005, 2022, ["petrolMedium","petrolLarge","dieselMedium"]),
+        model("Outback", 2005, 2022, ["petrolMedium","petrolLarge","dieselMedium"])
+    ],
+
+    "Suzuki": [
+        model("Swift", 2005, 2022, ["petrolSmall","dieselSmall"]),
+        model("SX4", 2006, 2014, ["petrolSmall","dieselSmall"]),
+        model("Vitara", 2015, 2022, ["petrolSmall","petrolMedium"]),
+        model("S-Cross", 2013, 2022, ["petrolSmall","dieselSmall"])
+    ],
+
+    "Tesla": [
+        model("Model S", 2013, 2022, ["electric"]),
+        model("Model 3", 2019, 2022, ["electric"]),
+        model("Model X", 2016, 2022, ["electric"]),
+        model("Model Y", 2021, 2022, ["electric"])
+    ],
+
+    "Toyota": [
+        model("Yaris", 2005, 2022, ["petrolSmall","dieselSmall","hybrid"]),
+        model("Auris", 2007, 2018, ["petrolSmall","dieselSmall","hybrid"]),
+        model("Corolla", 2005, 2022, ["petrolSmall","petrolMedium","dieselSmall","hybrid"]),
+        model("Avensis", 2005, 2018, ["petrolMedium","dieselMedium"]),
+        model("C-HR", 2016, 2022, ["petrolSmall","hybrid"]),
+        model("RAV4", 2005, 2022, ["petrolMedium","dieselMedium","hybrid"]),
+        model("Land Cruiser", 2005, 2022, ["dieselLarge","petrolLarge"]),
+        model("Prius", 2005, 2022, ["hybrid"])
+    ],
+
+    "Vauxhall": [
+        model("Corsa", 2005, 2022, ["petrolSmall","dieselSmall"]),
+        model("Astra", 2005, 2022, ["petrolSmall","petrolMedium","dieselSmall","dieselMedium"]),
+        model("Insignia", 2009, 2022, ["petrolMedium","dieselMedium","dieselLarge"]),
+        model("Mokka", 2013, 2022, ["petrolSmall","dieselSmall"])
+    ],
+
+    "Volkswagen": [
+        model("Polo", 2005, 2022, ["petrolSmall","dieselSmall","dieselMedium"]),
+        model("Golf", 2005, 2022, ["petrolSmall","petrolMedium","petrolLarge","dieselSmall","dieselMedium"]),
+        model("Passat", 2005, 2022, ["petrolMedium","dieselMedium","dieselLarge"]),
+        model("Jetta", 2005, 2018, ["petrolMedium","dieselMedium"]),
+        model("Tiguan", 2007, 2022, ["petrolMedium","dieselMedium"]),
+        model("Touareg", 2005, 2022, ["petrolLarge","dieselLarge"]),
+        model("Touran", 2005, 2022, ["petrolMedium","dieselMedium"]),
+        model("Scirocco", 2008, 2017, ["petrolMedium","dieselMedium"]),
+        model("T-Roc", 2017, 2022, ["petrolSmall","petrolMedium","dieselMedium"]),
+        model("Arteon", 2017, 2022, ["petrolMedium","dieselMedium"])
+    ],
+
+    "Volvo": [
+        model("C30", 2007, 2013, ["petrolSmall","petrolMedium","dieselSmall","dieselMedium"]),
+        model("S40", 2005, 2012, ["petrolMedium","dieselMedium"]),
+        model("S60", 2005, 2022, ["petrolMedium","petrolLarge","dieselMedium"]),
+        model("S90", 2016, 2022, ["petrolLarge","dieselLarge","hybrid"]),
+        model("V40", 2012, 2019, ["petrolSmall","dieselSmall","dieselMedium"]),
+        model("V60", 2010, 2022, ["petrolMedium","dieselMedium","hybrid"]),
+        model("XC40", 2018, 2022, ["petrolSmall","petrolMedium","electric"]),
+        model("XC60", 2008, 2022, ["petrolMedium","petrolLarge","dieselMedium","hybrid"]),
+        model("XC90", 2005, 2022, ["petrolLarge","dieselLarge","hybrid"])
+    ],
+
+    "Chevrolet": [
+        model("Aveo", 2005, 2015, ["petrolSmall","dieselSmall"]),
+        model("Cruze", 2009, 2015, ["petrolSmall","dieselMedium"]),
+        model("Captiva", 2006, 2015, ["petrolMedium","dieselMedium"])
+    ],
+
+    "Chrysler": [
+        model("300C", 2005, 2015, ["petrolLarge","dieselLarge"]),
+        model("Voyager", 2005, 2015, ["petrolLarge","dieselLarge"]),
+        model("PT Cruiser", 2005, 2010, ["petrolSmall","dieselSmall"])
+    ],
+
+    "Dodge": [
+        model("Challenger", 2008, 2022, ["petrolLarge"]),
+        model("Charger", 2006, 2022, ["petrolLarge"]),
+        model("Journey", 2008, 2020, ["petrolMedium","dieselMedium"])
+    ],
+
+    "Infiniti": [
+        model("Q30", 2015, 2019, ["petrolMedium","dieselMedium"]),
+        model("Q50", 2013, 2022, ["petrolMedium","petrolLarge","dieselMedium"]),
+        model("QX50", 2014, 2022, ["petrolMedium","dieselMedium"]),
+        model("QX70", 2008, 2017, ["petrolLarge","dieselLarge"])
+    ],
+
+    "Isuzu": [
+        model("D-Max", 2012, 2022, ["dieselLarge"]),
+        model("Trooper", 2005, 2008, ["dieselLarge"])
+    ],
+
+    "KGM": [
+        model("Korando", 2011, 2022, ["petrolMedium","dieselMedium"]),
+        model("Rexton", 2005, 2022, ["dieselLarge"]),
+        model("Musso", 2005, 2022, ["dieselLarge"])
+    ],
+
+    "SsangYong": [
+        model("Korando", 2011, 2022, ["petrolMedium","dieselMedium"]),
+        model("Rexton", 2005, 2022, ["dieselLarge"]),
+        model("Musso", 2005, 2022, ["dieselLarge"])
+    ],
+
+    "Saab": [
+        model("9-3", 2005, 2011, ["petrolMedium","petrolLarge","dieselMedium"]),
+        model("9-5", 2005, 2011, ["petrolLarge","dieselLarge"])
+    ],
+
+    "MG": [
+        model("MG3", 2013, 2022, ["petrolSmall"]),
+        model("MG ZS", 2017, 2022, ["petrolSmall","petrolMedium","electric"]),
+        model("MG HS", 2019, 2022, ["petrolMedium","hybrid"]),
+        model("MG5", 2020, 2022, ["electric"])
+    ],
+
+    "Rover": [
+        model("25", 2005, 2005, ["petrolSmall","dieselSmall"]),
+        model("45", 2005, 2005, ["petrolMedium","dieselSmall"]),
+        model("75", 2005, 2005, ["petrolMedium","dieselMedium"])
+    ],
+
+    "Daewoo": [
+        model("Kalos", 2005, 2005, ["petrolSmall"]),
+        model("Lacetti", 2005, 2005, ["petrolSmall","dieselSmall"]),
+        model("Nubira", 2005, 2005, ["petrolMedium"])
+    ],
+
+    "Daihatsu": [
+        model("Sirion", 2005, 2010, ["petrolSmall"]),
+        model("Terios", 2005, 2010, ["petrolSmall"])
+    ],
+
+    "Proton": [
+        model("Gen-2", 2005, 2012, ["petrolSmall","petrolMedium"]),
+        model("Persona", 2005, 2012, ["petrolSmall","petrolMedium"])
+    ],
+
+    "Lancia": [
+        model("Ypsilon", 2005, 2022, ["petrolSmall","dieselSmall"]),
+        model("Delta", 2008, 2014, ["petrolMedium","dieselMedium"])
+    ],
+
+    "Maserati": [
+        model("Ghibli", 2013, 2022, ["petrolLarge","dieselLarge"]),
+        model("Quattroporte", 2005, 2022, ["petrolLarge","dieselLarge"]),
+        model("Levante", 2016, 2022, ["petrolLarge","dieselLarge"])
+    ],
+
+    "Lotus": [
+        model("Elise", 2005, 2021, ["petrolMedium"]),
+        model("Exige", 2005, 2021, ["petrolMedium","petrolLarge"])
+    ],
+
+    "Ferrari": [
+        model("California", 2009, 2017, ["petrolLarge"]),
+        model("458 Italia", 2010, 2015, ["petrolLarge"]),
+        model("488 GTB", 2015, 2019, ["petrolLarge"])
+    ],
+
+    "Aston Martin": [
+        model("V8 Vantage", 2005, 2017, ["petrolLarge"]),
+        model("DB9", 2005, 2016, ["petrolLarge"]),
+        model("DB11", 2016, 2022, ["petrolLarge"])
+    ],
+
+    "McLaren": [
+        model("MP4-12C", 2011, 2014, ["petrolLarge"]),
+        model("570S", 2015, 2020, ["petrolLarge"]),
+        model("720S", 2017, 2022, ["petrolLarge"])
+    ]
+
+};
+
+
+/* ==========================================================
+   BUILD ACTUAL YEAR + ENGINE DATABASE
+========================================================== */
+
+const carDatabase = {};
+
+
+Object.entries(vehicleDatabase).forEach(
+    ([make, models]) => {
+
+        carDatabase[make] = {};
+
+        models.forEach(
+            vehicle => {
+
+                carDatabase[make][vehicle.name] = {};
+
+                for (
+                    let year = vehicle.from;
+                    year <= vehicle.to;
+                    year++
+                ) {
+
+                    let engines = [];
+
+                    vehicle.profiles.forEach(
+                        profileName => {
+
+                            const profile =
+                                ENGINE_PROFILES[profileName];
+
+                            if (!profile) return;
+
+                            profile.forEach(
+                                ([engine,hp,torque]) => {
+
+                                    engines.push({
+
+                                        engine,
+                                        hp,
+                                        torque,
+
+                                        fuel:
+                                            profileName === "dieselSmall" ||
+                                            profileName === "dieselMedium" ||
+                                            profileName === "dieselLarge"
+                                                ? "Diesel"
+                                                :
+                                            profileName === "hybrid"
+                                                ? "Hybrid"
+                                                :
+                                            profileName === "electric"
+                                                ? "Electric"
+                                                :
+                                                "Petrol"
+
+                                    });
+
+                                }
+                            );
+
+                        }
+                    );
+
+
+                    /*
+                       Remove duplicate engine names.
+                    */
+
+                    const unique =
+                        [];
+
+                    const used =
+                        new Set();
+
+
+                    engines.forEach(
+                        engine => {
+
+                            const key =
+                                `${engine.engine}-${engine.fuel}`;
+
+                            if (!used.has(key)) {
+
+                                used.add(key);
+
+                                unique.push(engine);
+
+                            }
+
+                        }
+                    );
+
+
+                    carDatabase[make][vehicle.name][year] =
+                        unique;
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+/* ==========================================================
+   STAGE SETTINGS
+==========================================================
+
+   Estimates only.
+
+========================================================== */
+
+const stageGains = {
+
+    1: {
+        Petrol: 0.15,
+        Diesel: 0.20,
+        Hybrid: 0.10,
+        Electric: 0.05
+    },
+
+    2: {
+        Petrol: 0.25,
+        Diesel: 0.30,
+        Hybrid: 0.15,
+        Electric: 0.08
+    },
+
+    3: {
+        Petrol: 0.35,
+        Diesel: 0.40,
+        Hybrid: 0.20,
+        Electric: 0.12
+    }
+
+};
+
+
+/* ==========================================================
+   ELEMENTS
+========================================================== */
+
+const makeSelect =
+    document.getElementById("make");
+
+const modelSelect =
+    document.getElementById("model");
+
+const yearSelect =
+    document.getElementById("year");
+
+const engineSelect =
+    document.getElementById("engine");
+
+const result =
+    document.getElementById("result");
+
+const resultCar =
+    document.getElementById("resultCar");
+
+const resultStage =
+    document.getElementById("resultStage");
+
+const stockHp =
+    document.getElementById("stockHp");
+
+const tunedHp =
+    document.getElementById("tunedHp");
+
+const stockTorque =
+    document.getElementById("stockTorque");
+
+const tunedTorque =
+    document.getElementById("tunedTorque");
+
+const hpGain =
+    document.getElementById("hpGain");
+
+const torqueGain =
+    document.getElementById("torqueGain");
+
+const whatsapp =
+    document.getElementById("whatsapp");
+
+let selectedStage = 1;
+
+
+/* ==========================================================
+   RESET SELECT
+========================================================== */
+
+function resetSelect(
+    element,
+    text
+) {
+
+    element.innerHTML =
+        `<option value="">${text}</option>`;
+
+    element.disabled = true;
+
+}
+
+
+/* ==========================================================
+   POPULATE MAKES
+========================================================== */
+
+function populateMakes() {
+
+    Object.keys(carDatabase)
+        .sort()
+        .forEach(
+            make => {
+
+                const option =
+                    document.createElement("option");
+
+                option.value = make;
+
+                option.textContent = make;
+
+                makeSelect.appendChild(option);
+
+            }
+        );
+
+}
+
+
+/* ==========================================================
+   POPULATE MODELS
+========================================================== */
+
+function populateModels(make) {
+
+    resetSelect(
+        modelSelect,
+        "Select model"
+    );
+
+    resetSelect(
+        yearSelect,
+        "Select year"
+    );
+
+    resetSelect(
+        engineSelect,
+        "Select engine"
+    );
+
+    result.classList.remove("show");
+
+
+    if (!make) return;
+
+
+    Object.keys(
+        carDatabase[make]
+    )
+    .sort()
+    .forEach(
+        model => {
+
+            const option =
+                document.createElement("option");
+
+            option.value = model;
+
+            option.textContent = model;
+
+            modelSelect.appendChild(option);
+
+        }
+    );
+
+
+    modelSelect.disabled = false;
+
+}
+
+
+/* ==========================================================
+   POPULATE YEARS
+========================================================== */
+
+function populateYears(
+    make,
+    model
+) {
+
+    resetSelect(
+        yearSelect,
+        "Select year"
+    );
+
+    resetSelect(
+        engineSelect,
+        "Select engine"
+    );
+
+    result.classList.remove("show");
+
+
+    if (
+        !make ||
+        !model
+    ) return;
+
+
+    Object.keys(
+        carDatabase[make][model]
+    )
+    .sort(
+        (a,b) =>
+            Number(b) - Number(a)
+    )
+    .forEach(
+        year => {
+
+            const option =
+                document.createElement("option");
+
+            option.value = year;
+
+            option.textContent = year;
+
+            yearSelect.appendChild(option);
+
+        }
+    );
+
+
+    yearSelect.disabled = false;
+
+}
+
+
+/* ==========================================================
+   POPULATE ENGINES
+========================================================== */
+
+function populateEngines(
+    make,
+    model,
+    year
+) {
+
+    resetSelect(
+        engineSelect,
+        "Select engine"
+    );
+
+    result.classList.remove("show");
+
+
+    if (
+        !make ||
+        !model ||
+        !year
+    ) return;
+
+
+    const engines =
+        carDatabase[make]
+            [model]
+            [year];
+
+
+    engines.forEach(
+        (car,index) => {
+
+            const option =
+                document.createElement("option");
+
+            option.value = index;
+
+            option.textContent =
+                `${car.engine} — ${car.hp} HP — ${car.torque} Nm — ${car.fuel}`;
+
+            engineSelect.appendChild(option);
+
+        }
+    );
+
+
+    engineSelect.disabled = false;
+
+}
+
+
+/* ==========================================================
+   CALCULATE
+========================================================== */
+
+function calculate() {
+
+    const make =
+        makeSelect.value;
+
+    const model =
+        modelSelect.value;
+
+    const year =
+        yearSelect.value;
+
+    const engineIndex =
+        engineSelect.value;
+
+
+    if (
+        !make ||
+        !model ||
+        !year ||
+        engineIndex === ""
+    ) {
+
+        result.classList.remove("show");
+
+        return;
+
+    }
+
+
+    const car =
+        carDatabase
+            [make]
+            [model]
+            [year]
+            [Number(engineIndex)];
+
+
+    if (!car) return;
+
+
+    const percentage =
+        stageGains
+            [selectedStage]
+            [car.fuel];
+
+
+    const calculatedHp =
+        Math.round(
+            car.hp *
+            (1 + percentage)
+        );
+
+
+    const calculatedTorque =
+        Math.round(
+            car.torque *
+            (1 + percentage)
+        );
+
+
+    const addedHp =
+        calculatedHp -
+        car.hp;
+
+
+    const addedTorque =
+        calculatedTorque -
+        car.torque;
+
+
+    /* RESULTS */
+
+    resultCar.textContent =
+        `${make} ${model} ${year} — ${car.engine}`;
+
+
+    resultStage.textContent =
+        `Stage ${selectedStage} • ${car.fuel}`;
+
+
+    stockHp.textContent =
+        `${car.hp} HP`;
+
+    tunedHp.textContent =
+        `${calculatedHp} HP`;
+
+    stockTorque.textContent =
+        `${car.torque} Nm`;
+
+    tunedTorque.textContent =
+        `${calculatedTorque} Nm`;
+
+    hpGain.textContent =
+        `+${addedHp} HP`;
+
+    torqueGain.textContent =
+        `+${addedTorque} Nm`;
+
+
+    /* WHATSAPP */
+
+    const message =
+`Hi DAutos,
+
+I'd like to enquire about tuning my vehicle.
+
+Make: ${make}
+Model: ${model}
+Year: ${year}
+Engine: ${car.engine}
+Fuel: ${car.fuel}
+
+Stage: ${selectedStage}
+
+Original Power: ${car.hp} HP
+Estimated Tuned Power: ${calculatedHp} HP
+Estimated Gain: +${addedHp} HP
+
+Original Torque: ${car.torque} Nm
+Estimated Tuned Torque: ${calculatedTorque} Nm
+Estimated Gain: +${addedTorque} Nm
+
+Please let me know what is possible for my car.`;
+
+
+    whatsapp.href =
+        "https://wa.me/353896032563?text=" +
+        encodeURIComponent(message);
+
+
+    result.classList.add("show");
+
+}
+
+
+/* ==========================================================
+   EVENTS
+========================================================== */
+
+makeSelect.addEventListener(
+    "change",
+    () => {
+
+        populateModels(
+            makeSelect.value
+        );
+
+    }
+);
+
+
+modelSelect.addEventListener(
+    "change",
+    () => {
+
+        populateYears(
+            makeSelect.value,
+            modelSelect.value
+        );
+
+    }
+);
+
+
+yearSelect.addEventListener(
+    "change",
+    () => {
+
+        populateEngines(
+            makeSelect.value,
+            modelSelect.value,
+            yearSelect.value
+        );
+
+    }
+);
+
+
+engineSelect.addEventListener(
+    "change",
+    calculate
+);
+
+
+/* STAGE BUTTONS */
+
+document
+    .querySelectorAll(".stage")
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .querySelectorAll(".stage")
+                        .forEach(
+                            btn =>
+                                btn.classList.remove("active")
+                        );
+
+
+                    button.classList.add("active");
+
+
+                    selectedStage =
+                        Number(
+                            button.dataset.stage
+                        );
+
+
+                    calculate();
+
+                }
+            );
+
+        }
+    );
+
+
+/* ==========================================================
+   INITIALISE
+========================================================== */
+
+populateMakes();
+
+
+document.getElementById(
+    "copyrightYear"
+).textContent =
+    new Date().getFullYear();
+
+
+/* ==========================================================
+   DATABASE SIZE CHECK
+========================================================== */
+
+let totalModels = 0;
+let totalCombinations = 0;
+
+Object.values(carDatabase).forEach(
+    models => {
+
+        totalModels +=
+            Object.keys(models).length;
+
+        Object.values(models).forEach(
+            years => {
+
+                Object.values(years).forEach(
+                    engines => {
+
+                        totalCombinations +=
+                            engines.length;
+
+                    }
+                );
+
+            }
+        );
+
+    }
+);
+
+console.log(
+    "DAutos database:",
+    Object.keys(carDatabase).length,
+    "makes,",
+    totalModels,
+    "models,",
+    totalCombinations,
+    "year/engine combinations."
+);
+
+</script>
+
+</body>
+</html>
